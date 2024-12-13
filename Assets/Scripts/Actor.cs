@@ -4,6 +4,19 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
+//Events for actors
+public enum MoveEvents
+{
+    Move,
+    StopMoving
+}
+
+public enum ShootEvents
+{
+    FireAt,
+    DequipWeapon
+}
+
 public class Actor : MonoBehaviour
 {
     [SerializeField] float moveSpeed=5;
@@ -18,21 +31,38 @@ public class Actor : MonoBehaviour
 
     private Gun gunHeld;
 
-    private void setMoveDirection(object moveDirection)
+
+
+    private void setMoveDirection(System.Enum eventType, object moveDirection)
     {
-        if((Vector2)moveDirection == Vector2.zero)
+        switch((MoveEvents)eventType)
         {
-            rb.velocity = Vector2.zero;
-            return;
+            case MoveEvents.Move:
+                rb.velocity += (Vector2)moveDirection * moveSpeed;
+                break;
+
+            case MoveEvents.StopMoving:
+                rb.velocity = Vector2.zero;
+                break;
         }
-    
-        rb.velocity += (Vector2)moveDirection * moveSpeed;
+        
     }
 
-    private void setAimDirection(object aimDirection)
+    private void setAimDirection(System.Enum eventType, object aimDirection)
     {
-         this.aimDirection += (Vector2)aimDirection;
-        DequipCurrentWeapon();
+        switch ((ShootEvents)eventType)
+        {
+            case ShootEvents.FireAt:
+                if(gunHeld!=null)
+                {
+                    gunHeld.ShootAt((Vector2)aimDirection);
+                }
+                break;
+            case ShootEvents.DequipWeapon:
+                DequipCurrentWeapon();
+                break;
+        }
+
     }
 
     public void ChangeMovementObserver(Observer newObserver)

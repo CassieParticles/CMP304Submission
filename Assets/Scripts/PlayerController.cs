@@ -24,30 +24,33 @@ public class PlayerController : MonoBehaviour
         a.ChangeShootingObserver(shootingObserver);
     }
 
-
     private void FixedUpdate()
     {
-        movementObserver.Notify(Vector2.zero);
+        movementObserver.Notify(MoveEvents.StopMoving,Vector2.zero);
         if (Input.GetKey(KeyCode.W))
         {
-            movementObserver.Notify(new Vector2(0, 1));
+            movementObserver.Notify(MoveEvents.Move,new Vector2(0, 1));
             
         }
         if (Input.GetKey(KeyCode.A))
         {
-            movementObserver.Notify(new Vector2(-1, 0));
+            movementObserver.Notify(MoveEvents.Move,new Vector2(-1, 0));
         }
         if (Input.GetKey(KeyCode.S))
         {
-            movementObserver.Notify(new Vector2(0, -1));
+            movementObserver.Notify(MoveEvents.Move,new Vector2(0, -1));
         }
         if (Input.GetKey(KeyCode.D))
         {
-            movementObserver.Notify(new Vector2(1, 0));
+            movementObserver.Notify(MoveEvents.Move,new Vector2(1, 0));
         }
         if(Input.GetMouseButton(0))
         {
-            shootingObserver.Notify(new Vector2(0, 0));
+            shootingObserver.Notify(ShootEvents.FireAt,new Vector2(0, 0));
+        }
+        if (Input.GetMouseButton(1))
+        { 
+            shootingObserver.Notify(ShootEvents.DequipWeapon,new Vector2(0, 0));
         }
     }
 }
