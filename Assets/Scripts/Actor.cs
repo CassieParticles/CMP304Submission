@@ -30,7 +30,7 @@ public class Actor : MonoBehaviour
     private Observer shootingObserver;
 
     private Gun gunHeld;
-
+    private Gun ignoreGun;   //Once dropped, ignore till player steps off the gun
 
 
     private void setMoveDirection(System.Enum eventType, object moveDirection)
@@ -101,6 +101,9 @@ public class Actor : MonoBehaviour
     {
         if (gunHeld == null) { return; }
         gunHeld.gameObject.transform.parent = null;
+
+        ignoreGun = gunHeld;
+
         gunHeld = null;
     }
 
@@ -122,10 +125,16 @@ public class Actor : MonoBehaviour
         //Exit early if gun is already held
         if (gunHeld != null) { return; }
         GameObject go = collision.gameObject;
-        if(go.GetComponent<Gun>() !=null)
+        Gun gun = go.GetComponent<Gun>();
+        if(gun !=null)
         {
-            EquipWeapon(go.GetComponent<Gun>());
+            if (gun == ignoreGun) { return; }   //Don't pick up the ignore gun
+            EquipWeapon(gun);
         }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        ignoreGun = null;
+    }
 }
