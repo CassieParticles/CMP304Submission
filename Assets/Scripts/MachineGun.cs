@@ -6,6 +6,9 @@ using static UnityEngine.GraphicsBuffer;
 
 public class MachineGun : Gun   //Gun inherits from monobehavior
 {
+    [SerializeField] private float bulletSpeed = 15;
+
+
     public override GameObject ShootAt(Vector2 target)
     {
         if(canShoot)
@@ -23,8 +26,8 @@ public class MachineGun : Gun   //Gun inherits from monobehavior
 
         Vector2 direction = (target - new Vector2(transform.position.x, transform.position.y)).normalized;
 
-        newBullet.GetComponent<Rigidbody2D>().velocity = direction;
-        newBullet.transform.position = transform.position;
+        newBullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+        newBullet.transform.position = transform.position + new Vector3(direction.x,direction.y,0);
         newBullet.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x));
 
         canShoot = false;

@@ -30,6 +30,7 @@ public class Actor : MonoBehaviour
     private Gun ignoreGun;   //Once dropped, ignore till player steps off the gun
     private Actor Target;
 
+    private float health;
 
     private void setMoveDirection(System.Enum eventType, object moveDirection)
     {
@@ -114,18 +115,30 @@ public class Actor : MonoBehaviour
 
         Debug.Log("Created creature");
         Debug.Log(rb);
+
+        health = 100;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Exit early if gun is already held
-        if (gunHeld != null) { return; }
         GameObject go = collision.gameObject;
-        Gun gun = go.GetComponent<Gun>();
-        if(gun !=null)
+        if (go.GetComponent<Gun>())
         {
-            if (gun == ignoreGun) { return; }   //Don't pick up the ignore gun
-            EquipWeapon(gun);
+            //Exit early if gun is already held
+            if (gunHeld != null) { return; }
+            Gun gun = go.GetComponent<Gun>();
+            if (gun != null)
+            {
+                if (gun == ignoreGun) { return; }   //Don't pick up the ignore gun
+                EquipWeapon(gun);
+            }
+        }
+        if(go.GetComponent<Bullet>())
+        {
+            //Hit by a bullet
+            float damageTaken = collision.gameObject.GetComponent<Bullet>().calcDamage(this);
+            health -= damageTaken;
+            Destroy(go);
         }
     }
 

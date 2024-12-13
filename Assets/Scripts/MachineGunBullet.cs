@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MachineGunBullet : Bullet
 {
-    private void Start()
+    public override float calcDamage(Actor actor) 
     {
-        
+        return 10;
     }
 }
