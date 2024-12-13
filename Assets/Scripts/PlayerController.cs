@@ -45,5 +45,9 @@ public class PlayerController : MonoBehaviour
         {
             movementObserver.Notify(new Vector2(1, 0));
         }
+        if(Input.GetMouseButton(0))
+        {
+            shootingObserver.Notify(new Vector2(0, 0));
+        }
     }
 }
