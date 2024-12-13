@@ -16,5 +16,7 @@ public class Gun : MonoBehaviour
         return null;
     }
 
+    public int getBulletCount() { return bulletCount; }
+
     public virtual int getGunValue() { return 0; }
 }
