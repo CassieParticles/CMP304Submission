@@ -21,20 +21,18 @@ public class Actor : MonoBehaviour
 {
     [SerializeField] float moveSpeed=5;
 
-    private Rigidbody2D rb;
+    private Controller controller;
 
-    private Observer movementObserver;
-    private Observer shootingObserver;
+    private Rigidbody2D rb;
 
     private Gun gunHeld;
     private Gun ignoreGun;   //Once dropped, ignore till player steps off the gun
-    private Actor Target;
+    private Stack<Actor> targets;
 
     private float health;
 
-    private void setMoveDirection(Actor actor, System.Enum eventType, object moveDirection)
+    public void setMoveDirection(System.Enum eventType, object moveDirection)
     {
-        if (actor != this) { return; }
         switch((MoveEvents)eventType)
         {
             case MoveEvents.Move:
@@ -45,12 +43,10 @@ public class Actor : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 break;
         }
-        
     }
 
-    private void setAimDirection(Actor actor, System.Enum eventType, object aimDirection)
+    public void setAimDirection(System.Enum eventType, object aimDirection)
     {
-        if (actor != this) { return; }
         switch ((ShootEvents)eventType)
         {
             case ShootEvents.FireAt:
@@ -66,26 +62,19 @@ public class Actor : MonoBehaviour
 
     }
 
-    public void ChangeMovementObserver(Observer newObserver)
+    public void SetController(Controller controller)
     {
-        if(movementObserver!= null) 
-        {
-            movementObserver.removeListener(setMoveDirection);
-        }
-
-        movementObserver = newObserver;
-        newObserver.addListener(setMoveDirection);
+        this.controller= controller;
     }
 
-    public void ChangeShootingObserver(Observer newObserver)
+    public Actor GetCurrentTarget()
     {
-        if (shootingObserver != null)
-        {
-            shootingObserver.removeListener(setAimDirection);
-        }
+        return targets.Peek();
+    }
 
-        shootingObserver = newObserver;
-        newObserver.addListener(setAimDirection);
+    public void AddNewTarget(Actor actor)
+    {
+        targets.Push(actor);
     }
 
     private void EquipWeapon(Gun gun)
@@ -109,7 +98,7 @@ public class Actor : MonoBehaviour
         gunHeld = null;
     }
 
-    private void Start()
+    private void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
 
@@ -119,6 +108,15 @@ public class Actor : MonoBehaviour
         Debug.Log(rb);
 
         health = 100;
+
+        targets = new Stack<Actor>();
+    }
+
+    private void FixedUpdate()
+    {
+        //Ask controller to carry out functions
+        if (controller == null) { return; }
+        controller.DoActions(this);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

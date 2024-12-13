@@ -1,62 +1,58 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Controller
 {
-    //temp stuff, will be written over later
-    [SerializeField] GameObject FellaPrefab;
-
-    private Observer movementObserver;
-    private Observer shootingObserver;
+    [SerializeField] private GameObject FellaPrefab;
 
     private Camera sceneCamera;
 
-    private Actor playerActor;
+    private Actor player;
 
-    private void Start()
+    public Actor getPlayer()
     {
-        //Set up observers for the player
-        movementObserver = new Observer();
-        shootingObserver = new Observer();
-
-        //Set up the actor for the player to control
-        GameObject instance = Instantiate(FellaPrefab);
-
-        playerActor = instance.GetComponent<Actor>();
-        playerActor.ChangeMovementObserver(movementObserver);
-        playerActor.ChangeShootingObserver(shootingObserver);
-
-        sceneCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        return player;
     }
-
-    private void FixedUpdate()
+    public override void DoActions(Actor actor)
     {
-        movementObserver.Notify(playerActor, MoveEvents.StopMoving,Vector2.zero);
-        if (Input.GetKey(KeyCode.W))
+        //Handle actor movement
+        actor.setMoveDirection(MoveEvents.StopMoving, Vector2.zero);
+        if(Input.GetKey(KeyCode.W))
         {
-            movementObserver.Notify(playerActor, MoveEvents.Move,new Vector2(0, 1));
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            movementObserver.Notify(playerActor, MoveEvents.Move,new Vector2(-1, 0));
+            actor.setMoveDirection(MoveEvents.Move, Vector2.up);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            movementObserver.Notify(playerActor, MoveEvents.Move,new Vector2(0, -1));
+            actor.setMoveDirection(MoveEvents.Move, Vector2.down);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            actor.setMoveDirection(MoveEvents.Move, Vector2.left);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            movementObserver.Notify(playerActor, MoveEvents.Move,new Vector2(1, 0));
+            actor.setMoveDirection(MoveEvents.Move, Vector2.right);
         }
+
         if(Input.GetMouseButton(0))
         {
             Vector2 aimPos = sceneCamera.ScreenToWorldPoint(Input.mousePosition);
-            shootingObserver.Notify(playerActor, ShootEvents.FireAt, aimPos);
+            actor.setAimDirection(ShootEvents.FireAt, aimPos);
         }
         if (Input.GetMouseButton(1))
-        { 
-            shootingObserver.Notify(ShootEvents.DequipWeapon,new Vector2(0, 0));
+        {
+            actor.setAimDirection(ShootEvents.DequipWeapon, Vector2.up);
         }
+    }
+
+    private void Awake()
+    {
+        sceneCamera = Camera.main;
+
+        GameObject playerActorGO = Instantiate(FellaPrefab);
+        player = playerActorGO.GetComponent<Actor>();
+
+        player.SetController(this);
     }
 }
