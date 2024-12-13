@@ -32,8 +32,9 @@ public class Actor : MonoBehaviour
 
     private float health;
 
-    private void setMoveDirection(System.Enum eventType, object moveDirection)
+    private void setMoveDirection(Actor actor, System.Enum eventType, object moveDirection)
     {
+        if (actor != this) { return; }
         switch((MoveEvents)eventType)
         {
             case MoveEvents.Move:
@@ -47,8 +48,9 @@ public class Actor : MonoBehaviour
         
     }
 
-    private void setAimDirection(System.Enum eventType, object aimDirection)
+    private void setAimDirection(Actor actor, System.Enum eventType, object aimDirection)
     {
+        if (actor != this) { return; }
         switch ((ShootEvents)eventType)
         {
             case ShootEvents.FireAt:

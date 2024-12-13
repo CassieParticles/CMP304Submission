@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
     private Camera sceneCamera;
 
+    private Actor playerActor;
+
     private void Start()
     {
         //Set up observers for the player
@@ -21,37 +23,36 @@ public class PlayerController : MonoBehaviour
         //Set up the actor for the player to control
         GameObject instance = Instantiate(FellaPrefab);
 
-        Actor a = instance.GetComponent<Actor>();
-        a.ChangeMovementObserver(movementObserver);
-        a.ChangeShootingObserver(shootingObserver);
+        playerActor = instance.GetComponent<Actor>();
+        playerActor.ChangeMovementObserver(movementObserver);
+        playerActor.ChangeShootingObserver(shootingObserver);
 
         sceneCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     private void FixedUpdate()
     {
-        movementObserver.Notify(MoveEvents.StopMoving,Vector2.zero);
+        movementObserver.Notify(playerActor, MoveEvents.StopMoving,Vector2.zero);
         if (Input.GetKey(KeyCode.W))
         {
-            movementObserver.Notify(MoveEvents.Move,new Vector2(0, 1));
-            
+            movementObserver.Notify(playerActor, MoveEvents.Move,new Vector2(0, 1));
         }
         if (Input.GetKey(KeyCode.A))
         {
-            movementObserver.Notify(MoveEvents.Move,new Vector2(-1, 0));
+            movementObserver.Notify(playerActor, MoveEvents.Move,new Vector2(-1, 0));
         }
         if (Input.GetKey(KeyCode.S))
         {
-            movementObserver.Notify(MoveEvents.Move,new Vector2(0, -1));
+            movementObserver.Notify(playerActor, MoveEvents.Move,new Vector2(0, -1));
         }
         if (Input.GetKey(KeyCode.D))
         {
-            movementObserver.Notify(MoveEvents.Move,new Vector2(1, 0));
+            movementObserver.Notify(playerActor, MoveEvents.Move,new Vector2(1, 0));
         }
         if(Input.GetMouseButton(0))
         {
             Vector2 aimPos = sceneCamera.ScreenToWorldPoint(Input.mousePosition);
-            shootingObserver.Notify(ShootEvents.FireAt, aimPos);
+            shootingObserver.Notify(playerActor, ShootEvents.FireAt, aimPos);
         }
         if (Input.GetMouseButton(1))
         { 
