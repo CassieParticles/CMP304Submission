@@ -7,6 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 public class MachineGun : Gun   //Gun inherits from monobehavior
 {
     [SerializeField] private float bulletSpeed = 15;
+    [SerializeField] private int startingBulletCount = 50;
 
 
     public override GameObject ShootAt(Vector2 target)
@@ -32,9 +33,11 @@ public class MachineGun : Gun   //Gun inherits from monobehavior
 
         canShoot = false;
 
+        bulletCount--;
+
         yield return new WaitForSeconds(0.1f);
 
-        canShoot = true;
+        canShoot = bulletCount > 0;
     }
 
     private bool canShoot=true;
@@ -47,5 +50,6 @@ public class MachineGun : Gun   //Gun inherits from monobehavior
     private void Start()
     {
         canShoot = true;
+        bulletCount = startingBulletCount;
     }
 }

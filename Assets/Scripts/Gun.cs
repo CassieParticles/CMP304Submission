@@ -6,6 +6,7 @@ public class Gun : MonoBehaviour
 {
     protected float fireRate;
     protected float bulletSpread;
+    protected int bulletCount;
 
     [SerializeField]protected GameObject bulletShot;
     
