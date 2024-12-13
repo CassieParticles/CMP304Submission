@@ -102,7 +102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6036083956996437562, guid: 6af536eb0f20c044f8d855e9f2f3e899, type: 3}
       propertyPath: m_Name
-      value: MachineGun 1
+      value: MachineGun
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -129,3 +129,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e4cb2926ba6fd4bb4387e42da343b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletShot: {fileID: 2240437910661418573, guid: d01751c5d48ff3d46a0ded9fe75ef7b1, type: 3}

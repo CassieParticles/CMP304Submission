@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     private Observer movementObserver;
     private Observer shootingObserver;
 
+    private Camera sceneCamera;
+
     private void Start()
     {
         //Set up observers for the player
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour
         Actor a = instance.GetComponent<Actor>();
         a.ChangeMovementObserver(movementObserver);
         a.ChangeShootingObserver(shootingObserver);
+
+        sceneCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     private void FixedUpdate()
@@ -46,7 +50,8 @@ public class PlayerController : MonoBehaviour
         }
         if(Input.GetMouseButton(0))
         {
-            shootingObserver.Notify(ShootEvents.FireAt,new Vector2(0, 0));
+            Vector2 aimPos = sceneCamera.ScreenToWorldPoint(Input.mousePosition);
+            shootingObserver.Notify(ShootEvents.FireAt, aimPos);
         }
         if (Input.GetMouseButton(1))
         { 

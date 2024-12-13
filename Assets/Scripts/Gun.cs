@@ -7,9 +7,13 @@ public class Gun : MonoBehaviour
     protected float fireRate;
     protected float bulletSpread;
 
+    [SerializeField]protected GameObject bulletShot;
+    
     //Return GameObject if new bullet is fired, return null otherwise
     public virtual GameObject ShootAt(Vector2 direction)
     {
         return null;
     }
+
+    public virtual int getGunValue() { return 0; }
 }

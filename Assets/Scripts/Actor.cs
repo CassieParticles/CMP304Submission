@@ -21,9 +21,6 @@ public class Actor : MonoBehaviour
 {
     [SerializeField] float moveSpeed=5;
 
-    private Vector2 moveDirection;
-    private Vector2 aimDirection;
-
     private Rigidbody2D rb;
 
     private Observer movementObserver;
@@ -31,6 +28,7 @@ public class Actor : MonoBehaviour
 
     private Gun gunHeld;
     private Gun ignoreGun;   //Once dropped, ignore till player steps off the gun
+    private Actor Target;
 
 
     private void setMoveDirection(System.Enum eventType, object moveDirection)
@@ -95,6 +93,7 @@ public class Actor : MonoBehaviour
         //Set the weapon to be child of the actor
         GameObject gunGameObject = gun.gameObject;
         gunGameObject.transform.parent = this.transform;
+        gunGameObject.transform.localPosition = Vector3.zero;
     }
 
     private void DequipCurrentWeapon()
@@ -109,9 +108,6 @@ public class Actor : MonoBehaviour
 
     private void Start()
     {
-        moveDirection = new Vector2();
-        aimDirection= new Vector2();
-
         rb = gameObject.GetComponent<Rigidbody2D>();
 
         gunHeld = null;
@@ -135,6 +131,6 @@ public class Actor : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        ignoreGun = null;
+        if (collision.gameObject.GetComponent<Gun>() == ignoreGun) { ignoreGun = null; }
     }
 }
