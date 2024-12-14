@@ -8,6 +8,8 @@ public class Gun : MonoBehaviour
     protected float bulletSpread;
     protected int bulletCount;
 
+    protected Actor owner;
+
     [SerializeField]protected GameObject bulletShot;
     
     //Return GameObject if new bullet is fired, return null otherwise
@@ -15,6 +17,10 @@ public class Gun : MonoBehaviour
     {
         return null;
     }
+
+    public void pickedUp(Actor owner) { this.owner = owner; }
+    public void dropped() { this.owner= null; }
+    public Actor getOwner() {  return this.owner; }
 
     public int getBulletCount() { return bulletCount; }
 

@@ -88,6 +88,7 @@ public class Actor : MonoBehaviour
     {
         //Set the gun held to the gun
         gunHeld = gun;
+        gun.pickedUp(this);
 
         //Set the weapon to be child of the actor
         GameObject gunGameObject = gun.gameObject;
@@ -99,6 +100,7 @@ public class Actor : MonoBehaviour
     {
         if (gunHeld == null) { return; }
         gunHeld.gameObject.transform.parent = null;
+        gunHeld.dropped();
 
         ignoreGun = gunHeld;
 
@@ -133,6 +135,12 @@ public class Actor : MonoBehaviour
         //Ask controller to carry out functions
         if (controller == null) { return; }
         controller.DoActions(this);
+
+        if(health <= 0)
+        {
+            DequipCurrentWeapon();
+            Destroy(gameObject);    //If other systems need to know this, change
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -158,6 +166,7 @@ public class Actor : MonoBehaviour
             if (gun != null)
             {
                 if (gun == ignoreGun) { return; }   //Don't pick up the ignore gun
+                if(gun.getOwner() != null) { return; }  //Don't pick upa  gun that is held
                 EquipWeapon(gun);
             }
         }
