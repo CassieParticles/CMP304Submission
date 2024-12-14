@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
+using Input = UnityEngine.Input;
 
 public class PlayerController : Controller
 {
@@ -43,6 +45,10 @@ public class PlayerController : Controller
         if (Input.GetMouseButton(1))
         {
             actor.setAimDirection(ShootEvents.DequipWeapon, Vector2.up);
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            actor.setAimDirection(ShootEvents.MeleeAttack, Vector2.zero);
         }
     }
 

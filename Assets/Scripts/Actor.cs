@@ -14,7 +14,8 @@ public enum MoveEvents
 public enum ShootEvents
 {
     FireAt,
-    DequipWeapon
+    DequipWeapon,
+    MeleeAttack
 }
 
 public class Actor : MonoBehaviour
@@ -31,12 +32,15 @@ public class Actor : MonoBehaviour
 
     private float health;
 
+    //Melee attack
+    private bool charging;
+
     public void setMoveDirection(System.Enum eventType, object moveDirection)
     {
         switch((MoveEvents)eventType)
         {
             case MoveEvents.Move:
-                rb.velocity += (Vector2)moveDirection * moveSpeed;
+                rb.velocity += (Vector2)moveDirection * moveSpeed * (charging ? 2.0f : 1.0f);   //Double speed if charging
                 break;
 
             case MoveEvents.StopMoving:
@@ -57,6 +61,9 @@ public class Actor : MonoBehaviour
                 break;
             case ShootEvents.DequipWeapon:
                 DequipCurrentWeapon();
+                break;
+            case ShootEvents.MeleeAttack:
+                StartCoroutine(MeleeAttack());
                 break;
         }
 
@@ -96,6 +103,15 @@ public class Actor : MonoBehaviour
         ignoreGun = gunHeld;
 
         gunHeld = null;
+    }
+
+    private IEnumerator MeleeAttack()
+    {
+        charging = true;
+
+        yield return new WaitForSeconds(0.5f);
+
+        charging = false;
     }
 
     private void Awake()
@@ -139,6 +155,13 @@ public class Actor : MonoBehaviour
             float damageTaken = collision.gameObject.GetComponent<Bullet>().calcDamage(this);
             health -= damageTaken;
             Destroy(go);
+        }
+        if(go.GetComponent<Actor>())
+        {
+            if(charging)
+            {
+                go.GetComponent<Actor>().health -= 20;  //Damage opponent via melee attack
+            }
         }
     }
 
