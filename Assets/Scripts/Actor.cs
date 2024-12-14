@@ -54,7 +54,7 @@ public class Actor : MonoBehaviour
         switch ((ShootEvents)eventType)
         {
             case ShootEvents.FireAt:
-                if(gunHeld!=null)
+                if(gunHeld!=null && !charging)
                 {
                     gunHeld.ShootAt((Vector2)aimDirection);
                 }
@@ -135,6 +135,18 @@ public class Actor : MonoBehaviour
         controller.DoActions(this);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject go = collision.gameObject;
+        if (go.GetComponent<Actor>())
+        {
+            if (charging)
+            {
+                go.GetComponent<Actor>().health -= 20;  //Damage opponent via melee attack
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject go = collision.gameObject;
@@ -155,13 +167,6 @@ public class Actor : MonoBehaviour
             float damageTaken = collision.gameObject.GetComponent<Bullet>().calcDamage(this);
             health -= damageTaken;
             Destroy(go);
-        }
-        if(go.GetComponent<Actor>())
-        {
-            if(charging)
-            {
-                go.GetComponent<Actor>().health -= 20;  //Damage opponent via melee attack
-            }
         }
     }
 
