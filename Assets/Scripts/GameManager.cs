@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
         playerActor = playerController.getPlayer();
 
-        for(int i=0;i<5;++i)
+        for(int i=0;i<0;++i)
         {
             GameObject actor = Instantiate(ActorPrefab);
             actor.transform.position = new Vector3(Random.value * 10, Random.value * 10, 0);

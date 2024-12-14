@@ -57,6 +57,7 @@ public class PlayerController : Controller
         sceneCamera = Camera.main;
 
         GameObject playerActorGO = Instantiate(FellaPrefab);
+        playerActorGO.name = "Player";
         player = playerActorGO.GetComponent<Actor>();
 
         player.SetController(this);

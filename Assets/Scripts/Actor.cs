@@ -76,6 +76,22 @@ public class Actor : MonoBehaviour
 
     public Actor GetCurrentTarget()
     {
+        Actor target = targets.Peek();
+        if(target==null)    //If current target doesn't exist, take it off the stack
+        {
+            targets.Pop();
+        }
+        if(targets.Count==0)
+        {
+            //No more targets, add player to stack
+            GameObject player = GameObject.Find("Player");
+            if(player==null)
+            {
+                //Player has been killed, errors are irelevent
+                return null;
+            }
+            AddNewTarget(player.GetComponent<Actor>());
+        }
         return targets.Peek();
     }
 

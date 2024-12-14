@@ -26,11 +26,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2757259082716574871, guid: 6af536eb0f20c044f8d855e9f2f3e899, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2757259082716574871, guid: 6af536eb0f20c044f8d855e9f2f3e899, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2757259082716574871, guid: 6af536eb0f20c044f8d855e9f2f3e899, type: 3}
       propertyPath: m_LocalPosition.x
@@ -102,7 +102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6036083956996437562, guid: 6af536eb0f20c044f8d855e9f2f3e899, type: 3}
       propertyPath: m_Name
-      value: MachineGun
+      value: MG
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -131,3 +131,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletShot: {fileID: 2240437910661418573, guid: d01751c5d48ff3d46a0ded9fe75ef7b1, type: 3}
   bulletSpeed: 15
+  startingBulletCount: 50

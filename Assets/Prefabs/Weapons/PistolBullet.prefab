@@ -1,6 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6412209364856187122
+--- !u!1 &6534302354103716572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3745756901137687670}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3745756901137687670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6534302354103716572}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6879224004963959567}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5993083841269571981
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,14 +39,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 890692142504485506, guid: 500f73b9c0c32df43bb6c986baeae8ed, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 890692142504485506, guid: 500f73b9c0c32df43bb6c986baeae8ed, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 890692142504485506, guid: 500f73b9c0c32df43bb6c986baeae8ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -58,7 +81,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5182266691662735039, guid: 500f73b9c0c32df43bb6c986baeae8ed, type: 3}
       propertyPath: m_Name
-      value: MachineGunBullet
+      value: PistolBullet
       objectReference: {fileID: 0}
     - target: {fileID: 7075035276830415194, guid: 500f73b9c0c32df43bb6c986baeae8ed, type: 3}
       propertyPath: m_Size.x
@@ -114,26 +137,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 890692142504485506, guid: 500f73b9c0c32df43bb6c986baeae8ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3745756901137687670}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5182266691662735039, guid: 500f73b9c0c32df43bb6c986baeae8ed, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5391489988608721755}
+      addedObject: {fileID: 2957138921537099243}
   m_SourcePrefab: {fileID: 100100000, guid: 500f73b9c0c32df43bb6c986baeae8ed, type: 3}
---- !u!1 &2240437910661418573 stripped
+--- !u!1 &1495382102179628850 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5182266691662735039, guid: 500f73b9c0c32df43bb6c986baeae8ed, type: 3}
-  m_PrefabInstance: {fileID: 6412209364856187122}
+  m_PrefabInstance: {fileID: 5993083841269571981}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5391489988608721755
+--- !u!114 &2957138921537099243
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2240437910661418573}
+  m_GameObject: {fileID: 1495382102179628850}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4168492ea2293324a8eaf52644a37234, type: 3}
+  m_Script: {fileID: 11500000, guid: 53b60635ad669b54bbefcc30512dbab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &6879224004963959567 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 890692142504485506, guid: 500f73b9c0c32df43bb6c986baeae8ed, type: 3}
+  m_PrefabInstance: {fileID: 5993083841269571981}
+  m_PrefabAsset: {fileID: 0}

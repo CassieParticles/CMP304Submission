@@ -6,6 +6,6 @@ public class MachineGunBullet : Bullet
 {
     public override float calcDamage(Actor actor) 
     {
-        return 10;
+        return 20;
     }
 }

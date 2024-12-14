@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class MachineGun : Gun   //Gun inherits from monobehavior
+public class Pistol : Gun
 {
     [SerializeField] private float bulletSpeed = 15;
-    [SerializeField] private int startingBulletCount = 50;
+    [SerializeField] private int startingBulletCount = 24;
 
+    public int GetGunValue()
+    {
+        return 10;
+    }
 
     protected override IEnumerator Shoot(Vector2 target)
     {
@@ -18,22 +20,16 @@ public class MachineGun : Gun   //Gun inherits from monobehavior
         Vector2 direction = (target - new Vector2(transform.position.x, transform.position.y)).normalized;
 
         newBullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
-        newBullet.transform.position = transform.position + new Vector3(direction.x,direction.y,0);
+        newBullet.transform.position = transform.position + new Vector3(direction.x, direction.y, 0);
         newBullet.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x));
 
         canShoot = false;
 
         bulletCount--;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
 
         canShoot = bulletCount > 0;
-    }
-
-
-    public override int getGunValue()
-    {
-        return 30;
     }
 
     private void Start()
