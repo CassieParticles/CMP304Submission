@@ -60,6 +60,9 @@ public class PlayerController : Controller
         playerActorGO.name = "Player";
         player = playerActorGO.GetComponent<Actor>();
 
+        GameObject mainCamera = Camera.main.gameObject;
+        mainCamera.transform.parent = playerActorGO.transform;
+
         player.SetController(this);
     }
 }
