@@ -10,6 +10,8 @@ public class Gun : MonoBehaviour
     protected int bulletCount;
     protected bool canShoot = true;
 
+    Controller relevantController;
+
     protected Actor owner;
 
     [SerializeField]protected GameObject bulletShot;
@@ -30,6 +32,17 @@ public class Gun : MonoBehaviour
     protected virtual IEnumerator Shoot(Vector2 target)
     {
         yield return null;
+    }
+        
+    //Called on creation, used so actors picking them up can take the AI from them
+    public void setController(Controller controller)
+    {
+        this.relevantController = controller;
+    }
+
+    public Controller getController()
+    {
+        return relevantController;
     }
 
     public void pickedUp(Actor owner) { this.owner = owner; }

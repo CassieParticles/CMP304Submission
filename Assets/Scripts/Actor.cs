@@ -71,27 +71,29 @@ public class Actor : MonoBehaviour
 
     public void SetController(Controller controller)
     {
+
         this.controller= controller;
     }
 
     public Actor GetCurrentTarget()
     {
-        Actor target = targets.Peek();
-        if(target==null)    //If current target doesn't exist, take it off the stack
-        {
-            targets.Pop();
-        }
-        if(targets.Count==0)
+        if (targets.Count == 0)
         {
             //No more targets, add player to stack
             GameObject player = GameObject.Find("Player");
-            if(player==null)
+            if (player == null)
             {
                 //Player has been killed, errors are irelevent
                 return null;
             }
             AddNewTarget(player.GetComponent<Actor>());
         }
+        Actor target = targets.Peek();
+        if(target==null)    //If current target doesn't exist, take it off the stack
+        {
+            targets.Pop();
+        }
+
         return targets.Peek();
     }
 
@@ -110,6 +112,12 @@ public class Actor : MonoBehaviour
         GameObject gunGameObject = gun.gameObject;
         gunGameObject.transform.parent = this.transform;
         gunGameObject.transform.localPosition = Vector3.zero;
+
+        //Do not overwrite player controller
+        if((PlayerController)controller==null)
+        { 
+            SetController(gun.getController());
+        }
     }
 
     private void DequipCurrentWeapon()
