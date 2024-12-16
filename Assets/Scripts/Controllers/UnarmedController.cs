@@ -18,25 +18,11 @@ public class UnarmedController : Controller
         List<GameObject> weaponList = new List<GameObject>();
         List<GameObject> actorList = new List<GameObject>();
 
-        List<GameObject> gameObjects = new List<GameObject>();
-        SceneManager.GetActiveScene().GetRootGameObjects(gameObjects);
-
-        //Get a list of the guns and actors in the scene
-        for(int i=0; i<gameObjects.Count;++i)
-        {
-            if(gameObjects[i].GetComponent<Gun>())
-            {
-                weaponList.Add(gameObjects[i]);
-            }
-            if (gameObjects[i].GetComponent<Actor>())
-            {
-                actorList.Add(gameObjects[i]);
-            }
-        }
-
-        
-
+        GetScene(actorList,weaponList);
         Actor target = actor.GetCurrentTarget();
+
+        //Remove the target from the actor list
+        actorList.Remove(target.gameObject);
 
         //Movement decision tree
         //Get the distance from this game object to the target, path 0 if distance is < 5, path 1 otherwise
