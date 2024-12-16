@@ -24,6 +24,15 @@ public class Actor : MonoBehaviour
 
     private Controller controller;
 
+    //Controller for when no weapon is selected
+    private Controller unarmedController;   
+
+    public void setUnarmedController(Controller controller)
+    {
+        unarmedController = controller;
+        SetController(unarmedController);
+    }
+
     private Rigidbody2D rb;
 
     private Gun gunHeld;
@@ -114,8 +123,8 @@ public class Actor : MonoBehaviour
         gunGameObject.transform.localPosition = Vector3.zero;
 
         //Do not overwrite player controller
-        if((PlayerController)controller==null)
-        { 
+        if (controller is not PlayerController)
+        {
             SetController(gun.getController());
         }
     }
@@ -129,6 +138,12 @@ public class Actor : MonoBehaviour
         ignoreGun = gunHeld;
 
         gunHeld = null;
+
+        //Do not overwrite player controller
+        if (controller is not PlayerController)
+        {
+            SetController(unarmedController);
+        }
     }
 
     private IEnumerator MeleeAttack()

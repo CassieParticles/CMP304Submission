@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject RocketLauncherPrefab;
 
     PlayerController playerController;
-    TestAIController testAIController;
+    UnarmedController unarmedController;
 
     Actor playerActor;
 
@@ -42,10 +42,12 @@ public class GameManager : MonoBehaviour
         switch (weaponToGive)
         {
             case WeaponSpawnWith.None:
-                
+                weaponPrefab = null;
+                AI = unarmedController;
+                break;
             case WeaponSpawnWith.Pistol:
                 weaponPrefab = PistolPrefab;
-                AI = testAIController;
+                AI = unarmedController;
                 break;
             default:
                 weaponPrefab = PistolPrefab;
@@ -55,11 +57,17 @@ public class GameManager : MonoBehaviour
 
 
         //Spawn enemy, put it in location, and then give it the weapon
-        GameObject weapon = Instantiate(weaponPrefab);
-        weapon.transform.position = spawnPosition;
-        weapon.GetComponent<Gun>().setController(AI);
+        if (weaponPrefab != null)
+        {
+            GameObject weapon = Instantiate(weaponPrefab);
+            weapon.transform.position = spawnPosition;
+            weapon.GetComponent<Gun>().setController(AI);
+        }
+
         GameObject enemy = Instantiate(ActorPrefab);
         enemy.transform.position = spawnPosition;
+        Actor enemyActor = enemy.GetComponent<Actor>();
+        enemyActor.setUnarmedController(unarmedController);
 
     }
 
@@ -70,15 +78,18 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
+        
+
+
         playerController = Instantiate(playerControllerPrefab).GetComponent<PlayerController>();
-        testAIController = Instantiate(AITestControllerPrefab).GetComponent<TestAIController>();
+        unarmedController = Instantiate(AITestControllerPrefab).GetComponent<UnarmedController>();
 
         playerActor = playerController.getPlayer();
 
 
+        Instantiate(MachineGunPrefab).GetComponent<Gun>().setController(playerController);
 
 
-
-        SpawnEnemy(new Vector2(3, 0), WeaponSpawnWith.Pistol);
+        SpawnEnemy(new Vector2(3, 0), WeaponSpawnWith.None);
     }
 }
