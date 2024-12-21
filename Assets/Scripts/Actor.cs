@@ -146,6 +146,11 @@ public class Actor : MonoBehaviour
         }
     }
 
+    public Gun getCurrentWeapon()
+    {
+        return gunHeld;
+    }
+
     private IEnumerator MeleeAttack()
     {
         charging = true;

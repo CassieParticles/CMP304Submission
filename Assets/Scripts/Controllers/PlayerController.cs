@@ -6,8 +6,6 @@ using Input = UnityEngine.Input;
 
 public class PlayerController : Controller
 {
-    [SerializeField] private GameObject FellaPrefab;
-
     private Camera sceneCamera;
 
     private Actor player;
@@ -15,6 +13,11 @@ public class PlayerController : Controller
     public Actor getPlayer()
     {
         return player;
+    }
+
+    public void SetCamera(Camera camera)
+    {
+        sceneCamera = camera;
     }
     public override void DoActions(Actor actor)
     {
@@ -50,19 +53,5 @@ public class PlayerController : Controller
         {
             actor.setAimDirection(ShootEvents.MeleeAttack, Vector2.zero);
         }
-    }
-
-    private void Awake()
-    {
-        sceneCamera = Camera.main;
-
-        GameObject playerActorGO = Instantiate(FellaPrefab);
-        playerActorGO.name = "Player";
-        player = playerActorGO.GetComponent<Actor>();
-
-        GameObject mainCamera = Camera.main.gameObject;
-        mainCamera.transform.parent = playerActorGO.transform;
-
-        player.SetController(this);
     }
 }

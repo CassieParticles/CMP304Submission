@@ -6,7 +6,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject playerControllerPrefab;
-    [SerializeField] private GameObject AITestControllerPrefab;
+    [SerializeField] private GameObject UnarmedControllerPrefab;
+    [SerializeField] private GameObject pistolControllerPrefab;
 
     [SerializeField] private GameObject ActorPrefab;
 
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     PlayerController playerController;
     UnarmedController unarmedController;
+    PistolController pistolController;
 
     Actor playerActor;
 
@@ -28,6 +30,42 @@ public class GameManager : MonoBehaviour
         GrenadeLauncher,
         RockerLauncher
     }
+
+    public GameObject SpawnWeapon(Vector2 spawnPosition,  WeaponSpawnWith weaponSpawn)
+    {
+        GameObject weaponToSpawn = null;
+        Controller AI = null;
+
+        switch (weaponSpawn)
+        {
+            case WeaponSpawnWith.None: 
+                return null;
+            case WeaponSpawnWith.Pistol:
+                weaponToSpawn = PistolPrefab;
+                AI = pistolController;
+                break;
+            case WeaponSpawnWith.MachineGun: 
+                weaponToSpawn = MachineGunPrefab;
+                //TODO: AI is set to Machine gun AI
+                break;
+            case WeaponSpawnWith.GrenadeLauncher:
+                weaponToSpawn = GrenadeLauncherPrefab;
+                //TODO: AI is set to grenade launcher AI
+                break;
+            case WeaponSpawnWith.RockerLauncher:
+                weaponToSpawn= RocketLauncherPrefab;
+                //TODO: AI is set to rocket launcher AI
+                break;
+
+        }
+
+        GameObject weapon = Instantiate(weaponToSpawn);
+
+        weapon.transform.position = spawnPosition;
+        weapon.GetComponent<Gun>().setController(AI);
+
+        return weapon;
+    }
     public void SpawnEnemy(Vector2 groundSpawnPosition, WeaponSpawnWith weaponToGive)
     {
         //Generate spawn position offset
@@ -35,34 +73,9 @@ public class GameManager : MonoBehaviour
         Vector2 offsetDir = new Vector2(Mathf.Cos(spawnOffsetAngle), Mathf.Sin(spawnOffsetAngle));
         Vector2 spawnPosition = groundSpawnPosition + offsetDir;
 
-        //Get which gun and AI to spawn
-        GameObject weaponPrefab = null;
-        Controller AI = null;
+        //Give enemy their weapon
+        SpawnWeapon(spawnPosition,weaponToGive);
 
-        switch (weaponToGive)
-        {
-            case WeaponSpawnWith.None:
-                weaponPrefab = null;
-                AI = unarmedController;
-                break;
-            case WeaponSpawnWith.Pistol:
-                weaponPrefab = PistolPrefab;
-                AI = unarmedController;
-                break;
-            default:
-                weaponPrefab = PistolPrefab;
-                AI = null;
-                break;
-        }
-
-
-        //Spawn enemy, put it in location, and then give it the weapon
-        if (weaponPrefab != null)
-        {
-            GameObject weapon = Instantiate(weaponPrefab);
-            weapon.transform.position = spawnPosition;
-            weapon.GetComponent<Gun>().setController(AI);
-        }
 
         GameObject enemy = Instantiate(ActorPrefab);
         enemy.transform.position = spawnPosition;
@@ -78,18 +91,34 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
-        
+
+        //Create controllers
+        playerController = new PlayerController();
+        unarmedController = new UnarmedController();
+        pistolController = new PistolController();
 
 
-        playerController = Instantiate(playerControllerPrefab).GetComponent<PlayerController>();
-        unarmedController = Instantiate(AITestControllerPrefab).GetComponent<UnarmedController>();
+        //Create player game object
+        GameObject PlayerObject = Instantiate(ActorPrefab);
+        PlayerObject.name = "Player";
+        PlayerObject.GetComponent<Actor>().SetController(playerController);
+
+        //Get camera
+        GameObject cameraGO = Camera.main.gameObject;
+        cameraGO.transform.parent = PlayerObject.transform;
+        playerController.SetCamera(Camera.main);
 
         playerActor = playerController.getPlayer();
 
+        //Give player a machine gun
+        SpawnWeapon(Vector2.zero, WeaponSpawnWith.MachineGun);
 
-        Instantiate(MachineGunPrefab).GetComponent<Gun>().setController(playerController);
 
+        SpawnEnemy(new Vector2(3, 0), WeaponSpawnWith.Pistol);
 
-        SpawnEnemy(new Vector2(3, 0), WeaponSpawnWith.None);
+        SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
+        SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
+        SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
+        SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
     }
 }

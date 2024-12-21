@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerControllerPrefab: {fileID: 3060971441725437550, guid: 1e4de1522413d534e896ac32e124729e, type: 3}
-  AITestControllerPrefab: {fileID: 6645659692581832656, guid: 438f855f00a428d48b5d002bdff735cb, type: 3}
+  UnarmedControllerPrefab: {fileID: 6645659692581832656, guid: 438f855f00a428d48b5d002bdff735cb, type: 3}
   ActorPrefab: {fileID: 2989515565445070099, guid: 2f15f93f0f5eeff4d83bf890a39d60bd, type: 3}
   PistolPrefab: {fileID: 4979342691687865261, guid: f20c6330fe989da478c15917d5209b74, type: 3}
   MachineGunPrefab: {fileID: 8841453270062057629, guid: a3cae1c3aeea2244f8031b134468551c, type: 3}

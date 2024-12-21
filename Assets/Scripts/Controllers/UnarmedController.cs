@@ -7,11 +7,7 @@ using static Node;
 
 public class UnarmedController : Controller
 {
-    //The decisionTree involved in finding movement AI
-    Node moveRootNode;
-    
-
-    //Set up, only time Awake is above DoActions
+     //Set up, only time Awake is above DoActions
     public override void DoActions(Actor actor)
     {
 
@@ -21,8 +17,9 @@ public class UnarmedController : Controller
         GetScene(actorList,weaponList);
         Actor target = actor.GetCurrentTarget();
 
-        //Remove the target from the actor list
+        //Remove the target and actor from the actor list
         actorList.Remove(target.gameObject);
+        actorList.Remove(actor.gameObject);
 
         //Movement decision tree
         //Get the distance from this game object to the target, path 0 if distance is < 5, path 1 otherwise
