@@ -73,11 +73,54 @@ public class Controller
     protected Vector3 getAverageLocation(List<GameObject> gameObjects)
     {
         Vector3 averageLocation = Vector3.zero;
+        if (gameObjects.Count == 0)
+        {
+            return averageLocation;
+        }
         for (int i = 0; i < gameObjects.Count; ++i)
         {
             averageLocation+= gameObjects[i].transform.position;
         }
         averageLocation /= gameObjects.Count;
         return averageLocation;
+    }
+
+    protected List<RaycastHit2D> GetEnemiesInWay(Actor actor)
+    {
+        Actor target = actor.GetCurrentTarget();
+        //Shooting decision tree
+        Vector3 rayLine = target.transform.position - actor.transform.position;
+        List<RaycastHit2D> colliderArray = new List<RaycastHit2D>();
+        ContactFilter2D contactFilter = new ContactFilter2D().NoFilter();
+
+        //Get all enemies between target and actor
+        //Get all colliders in raycast between player and target
+        int collideCount = Physics2D.Raycast(actor.transform.position, rayLine, contactFilter, colliderArray);
+        for (int i = 0; i < colliderArray.Count; ++i)
+        {
+            //Collider isn't an actor
+            if (colliderArray[i].collider.gameObject.GetComponent<Actor>() == null)
+            {
+                colliderArray.RemoveAt(i);  //Remove item then restart loop without incrementing i
+                i--;
+                continue;
+            }
+            //Collider is target (will always be colliding)
+            if (colliderArray[i].collider.gameObject == target.gameObject)
+            {
+                colliderArray.RemoveAt(i);  //Remove item then restart loop without incrementing i
+                i--;
+                continue;
+            }
+            //Collider is actor (will always be colliding)
+            if (colliderArray[i].collider.gameObject == actor.gameObject)
+            {
+                colliderArray.RemoveAt(i);  //Remove item then restart loop without incrementing i
+                i--;
+                continue;
+            }
+        }
+
+        return colliderArray;
     }
 }

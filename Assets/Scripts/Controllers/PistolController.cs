@@ -40,9 +40,32 @@ public class PistolController : Controller
             {
                 //If there is other enemies, move towards them
                 Vector3 averagePosition = getAverageLocation(actorList);
-                Vector2 direction = averagePosition - actor.transform.position;
-                actor.setMoveDirection(MoveEvents.Move, direction);
+                if (averagePosition != null)
+                {
+                    Vector2 direction = averagePosition - actor.transform.position;
+                    actor.setMoveDirection(MoveEvents.Move, direction);
+                }
+                else
+                {
+                    //Do nothing
+                }
+
             }
         }
+
+        
+
+        //Weapon is out of ammo
+        if (actor.getCurrentWeapon().getBulletCount() == 0)
+        {
+            //Drop weapon (change to unarmed AI)
+            actor.setAimDirection(ShootEvents.DequipWeapon, Vector2.zero);
+        }
+        else
+        {
+            Vector2 aimDirection = (target.transform.position - actor.transform.position).normalized;
+            actor.setAimDirection(ShootEvents.FireAt,aimDirection);
+        }
+
     }
 }

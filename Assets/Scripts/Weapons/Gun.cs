@@ -46,7 +46,14 @@ public class Gun : MonoBehaviour
     }
 
     public void pickedUp(Actor owner) { this.owner = owner; }
-    public void dropped() { this.owner= null; }
+    public void dropped() 
+    {
+        this.owner= null; 
+        if(bulletCount == 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
     public Actor getOwner() {  return this.owner; }
 
     public int getBulletCount() { return bulletCount; }

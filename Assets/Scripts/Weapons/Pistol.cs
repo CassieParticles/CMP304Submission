@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Pistol : Gun
 {
-    [SerializeField] private float bulletSpeed = 15;
-    [SerializeField] private int startingBulletCount = 24;
+    [SerializeField] private float bulletSpeed = 10;
+    [SerializeField] private int startingBulletCount = 5;
 
     public int GetGunValue()
     {
