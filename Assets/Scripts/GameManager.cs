@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     Actor playerActor;
 
-    public enum WeaponSpawnWith
+    public enum Weapon
     {
         None,
         Pistol,
@@ -31,28 +31,28 @@ public class GameManager : MonoBehaviour
         RockerLauncher
     }
 
-    public GameObject SpawnWeapon(Vector2 spawnPosition,  WeaponSpawnWith weaponSpawn)
+    public GameObject SpawnWeapon(Vector2 spawnPosition,  Weapon weaponSpawn)
     {
         GameObject weaponToSpawn = null;
         Controller AI = null;
 
         switch (weaponSpawn)
         {
-            case WeaponSpawnWith.None: 
+            case Weapon.None: 
                 return null;
-            case WeaponSpawnWith.Pistol:
+            case Weapon.Pistol:
                 weaponToSpawn = PistolPrefab;
                 AI = pistolController;
                 break;
-            case WeaponSpawnWith.MachineGun: 
+            case Weapon.MachineGun: 
                 weaponToSpawn = MachineGunPrefab;
                 //TODO: AI is set to Machine gun AI
                 break;
-            case WeaponSpawnWith.GrenadeLauncher:
+            case Weapon.GrenadeLauncher:
                 weaponToSpawn = GrenadeLauncherPrefab;
                 //TODO: AI is set to grenade launcher AI
                 break;
-            case WeaponSpawnWith.RockerLauncher:
+            case Weapon.RockerLauncher:
                 weaponToSpawn= RocketLauncherPrefab;
                 //TODO: AI is set to rocket launcher AI
                 break;
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
 
         return weapon;
     }
-    public void SpawnEnemy(Vector2 groundSpawnPosition, WeaponSpawnWith weaponToGive)
+    public void SpawnEnemy(Vector2 groundSpawnPosition, Weapon weaponToGive)
     {
         //Generate spawn position offset
         float spawnOffsetAngle = Random.value * 3.14159f * 2;
@@ -111,13 +111,15 @@ public class GameManager : MonoBehaviour
         playerActor = playerController.getPlayer();
 
         //Give player a machine gun
-        SpawnWeapon(Vector2.zero, WeaponSpawnWith.MachineGun);
+        SpawnWeapon(Vector2.zero, Weapon.MachineGun);
 
 
-        SpawnEnemy(new Vector2(3, 0), WeaponSpawnWith.Pistol);
+        SpawnEnemy(new Vector2(3, 0), Weapon.None);
 
-        SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
-        SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
+        SpawnWeapon(new Vector2(1, 0), Weapon.Pistol);
+
+        //SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
+        //SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
         //SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
         //SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
     }

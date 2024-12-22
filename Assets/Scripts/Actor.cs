@@ -199,7 +199,7 @@ public class Actor : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         GameObject go = collision.gameObject;
         if (go.GetComponent<Gun>())

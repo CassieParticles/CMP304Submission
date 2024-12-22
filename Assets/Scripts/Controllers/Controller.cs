@@ -30,7 +30,7 @@ public class Controller
         }
     }
 
-    protected GameObject GetClosestWithin(List<GameObject> gameObjects, GameObject subject, int maxDist = int.MaxValue)
+    protected GameObject GetClosestWithin(List<GameObject> gameObjects, GameObject subject, float maxDist = float.MaxValue)
     {
         GameObject closest = null;
         float closestDist = maxDist;
@@ -49,7 +49,7 @@ public class Controller
         return closest;
     }
 
-    protected GameObject GetClosestWeapon(List<GameObject> gameObjects, GameObject subject, int maxDist = int.MaxValue, int minValue = 0)
+    protected GameObject GetClosestWeapon(List<GameObject> gameObjects, GameObject subject, float maxDist = float.MaxValue, int minValue = 0)
     {
         GameObject closestWeapon = null;
         float closestDist = maxDist;
