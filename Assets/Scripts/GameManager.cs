@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
 
         SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
         SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
-        SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
-        SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
+        //SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
+        //SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
     }
 }
