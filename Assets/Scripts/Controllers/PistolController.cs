@@ -56,8 +56,6 @@ public class PistolController : Controller
 
 
         //Weapon is out of ammo
-        Vector2 pos = target.transform.position;    //Explicitly(ish) cast position to a Vector2
-        actor.setAimDirection(ShootEvents.FireAt, pos);
 
         if (actor.getCurrentWeapon().getBulletCount() == 0)
         {
@@ -66,6 +64,17 @@ public class PistolController : Controller
         }
         else
         {
+            List<RaycastHit2D> actorCollision = GetActorInWay(actor);
+            if(actorCollision.Count > 0)
+            {
+                //Don't shoot
+                Debug.Log("Not shooting");
+            }
+            else
+            {
+                Vector2 pos = target.transform.position;    //Explicitly(ish) cast position to a Vector2
+                actor.setAimDirection(ShootEvents.FireAt, pos);
+            }
 
         }
 

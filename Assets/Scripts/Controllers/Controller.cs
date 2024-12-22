@@ -85,7 +85,7 @@ public class Controller
         return averageLocation;
     }
 
-    protected List<RaycastHit2D> GetEnemiesInWay(Actor actor)
+    protected List<RaycastHit2D> GetActorInWay(Actor actor)
     {
         Actor target = actor.GetCurrentTarget();
         //Shooting decision tree
