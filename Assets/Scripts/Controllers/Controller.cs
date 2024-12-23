@@ -21,7 +21,12 @@ public class Controller
         {
             if (gameObjects[i].GetComponent<Gun>())
             {
-                guns.Add(gameObjects[i]);
+                //Only add dropped guns
+                if(gameObjects[i].GetComponent<Gun>().getOwner() == null)
+                {
+                    guns.Add(gameObjects[i]);
+                }
+                
             }
             if (gameObjects[i].GetComponent<Actor>())
             {
