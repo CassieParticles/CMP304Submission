@@ -112,13 +112,14 @@ public class GameManager : MonoBehaviour
         SpawnWeapon(Vector2.zero, Weapon.MachineGun);
 
 
-        SpawnEnemy(new Vector2(3, 0), Weapon.None);
+        SpawnEnemy(new Vector2(5, 0), Weapon.None);
+        SpawnEnemy(new Vector2(5, 0), Weapon.None);
+        SpawnEnemy(new Vector2(5, 0), Weapon.None);
+        SpawnEnemy(new Vector2(5, 0), Weapon.None);
 
         SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
-
-        //SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
-        //SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
-        //SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
-        //SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
+        SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
+        SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
+        SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
     }
 }

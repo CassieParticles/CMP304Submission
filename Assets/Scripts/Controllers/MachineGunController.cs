@@ -27,7 +27,7 @@ public class MachineGunController :  Controller
             actor.setMoveDirection(MoveEvents.Move, direction);
 
         }
-        else if(distanceToTarget < 2)
+        else if(distanceToTarget < 3)
         {
             //Move away from target
             Vector2 direction = (actor.transform.position - target.transform.position).normalized;
@@ -35,7 +35,33 @@ public class MachineGunController :  Controller
         }
         else
         {
-
+            if(actorList.Count > 2)
+            {
+                //Get average position of all targets
+                Vector3 averagePosition = getAverageLocation(actorList);
+                Vector3 dAvg = averagePosition - actor.transform.position;
+                Vector2 dAvg2 = dAvg;
+                if(dAvg.magnitude > 5)
+                {
+                    //Move towards centre
+                    actor.setMoveDirection(MoveEvents.Move, dAvg2.normalized);
+                }
+                else
+                {
+                    if(GetActorInWay(actor).Count > 0)
+                    {
+                        //Can't see target, move perpendicular
+                        Vector2 directionToTarget = (target.transform.position - actor.transform.position).normalized;
+                        Vector2 direction = new Vector2(-directionToTarget.y, directionToTarget.x);
+                        direction += -directionToTarget * 0.05f;
+                        actor.setMoveDirection(MoveEvents.Move, directionToTarget.normalized);
+                    }
+                }
+            }
+            else
+            {
+                //Do nothing
+            }
         }
     }
 }
