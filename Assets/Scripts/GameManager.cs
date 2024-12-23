@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject playerControllerPrefab;
-    [SerializeField] private GameObject UnarmedControllerPrefab;
-    [SerializeField] private GameObject pistolControllerPrefab;
-
     [SerializeField] private GameObject ActorPrefab;
 
     [SerializeField] private GameObject PistolPrefab;
@@ -19,6 +15,7 @@ public class GameManager : MonoBehaviour
     PlayerController playerController;
     UnarmedController unarmedController;
     PistolController pistolController;
+    MachineGunController machineGunController;
 
     Actor playerActor;
 
@@ -46,7 +43,7 @@ public class GameManager : MonoBehaviour
                 break;
             case Weapon.MachineGun: 
                 weaponToSpawn = MachineGunPrefab;
-                //TODO: AI is set to Machine gun AI
+                AI = machineGunController;
                 break;
             case Weapon.GrenadeLauncher:
                 weaponToSpawn = GrenadeLauncherPrefab;
@@ -96,6 +93,7 @@ public class GameManager : MonoBehaviour
         playerController = new PlayerController();
         unarmedController = new UnarmedController();
         pistolController = new PistolController();
+        machineGunController = new MachineGunController();
 
 
         //Create player game object
@@ -116,7 +114,7 @@ public class GameManager : MonoBehaviour
 
         SpawnEnemy(new Vector2(3, 0), Weapon.None);
 
-        SpawnWeapon(new Vector2(1, 0), Weapon.Pistol);
+        SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
 
         //SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
         //SpawnEnemy(new Vector2(5, 1), WeaponSpawnWith.None);
