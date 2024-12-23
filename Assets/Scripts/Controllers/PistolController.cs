@@ -74,8 +74,7 @@ public class PistolController : Controller
             else 
             {
                 //Check if shooting hits non-target
-                List<RaycastHit2D> actorCollision = GetActorInWay(actor);
-                if (actorCollision.Count > 0)
+                if (GetActorInWay(actor).Count > 0)
                 {
                     //Don't shoot
                 }
