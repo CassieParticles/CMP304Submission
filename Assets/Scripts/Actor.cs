@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 //Events for actors
 public enum MoveEvents
@@ -45,6 +46,8 @@ public class Actor : MonoBehaviour
     private bool charging;
     //Direction actor was moving in last frame, used to predict movement direction
     private Vector2 LFMoveDirection;
+
+    private List<Actor> touchingActors;
 
     public void setMoveDirection(System.Enum eventType, object moveDirection)
     {
@@ -172,9 +175,36 @@ public class Actor : MonoBehaviour
         charging = false;
     }
 
+    public int getTouchingActorCount()
+    {
+        return touchingActors.Count;
+    }
+    public Vector2 getDirAwayFromTouchingActors()
+    {
+        Vector2 avgDir = Vector2.zero;
+        if(touchingActors.Count == 0)
+        {
+            return avgDir;
+        }
+        for (int i = 0; i < touchingActors.Count; i++)
+        {
+            if (touchingActors==null)
+            {
+                touchingActors.Remove(touchingActors[i]);
+                i--;
+                continue;
+            }
+            Vector2 dir = transform.position - touchingActors[i].transform.position;
+            avgDir += dir;
+        }
+
+        return avgDir.normalized;
+    }
+
     private void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
+      
 
         gunHeld = null;
 
@@ -183,7 +213,7 @@ public class Actor : MonoBehaviour
 
         health = 100;
 
-        targets = new Stack<Actor>();
+        targets = new Stack<Actor>();touchingActors = new List<Actor>();
     }
 
     private void FixedUpdate()
@@ -209,7 +239,18 @@ public class Actor : MonoBehaviour
             {
                 go.GetComponent<Actor>().health -= 20;  //Damage opponent via melee attack
             }
+            touchingActors.Add(go.GetComponent<Actor>());
         }
+    }
+
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<Actor>())
+        {
+            touchingActors.Remove(collision.gameObject.GetComponent<Actor>());
+        }
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 
 public class MachineGunController :  Controller
@@ -20,7 +21,12 @@ public class MachineGunController :  Controller
         actor.setMoveDirection(MoveEvents.StopMoving, Vector2.zero);
 
         float distanceToTarget = (actor.gameObject.transform.position - target.gameObject.transform.position).magnitude;
-        if(distanceToTarget > 7)
+        if(actor.getTouchingActorCount() > 0 )
+        {
+            Vector2 direction = actor.getDirAwayFromTouchingActors();
+            actor.setMoveDirection(MoveEvents.Move, direction);
+        }
+        else if(distanceToTarget > 7)
         {
             //Move towards target
             Vector2 direction = (target.transform.position - actor.transform.position).normalized;
@@ -53,7 +59,6 @@ public class MachineGunController :  Controller
                         //Can't see target, move perpendicular
                         Vector2 directionToTarget = (target.transform.position - actor.transform.position).normalized;
                         Vector2 direction = new Vector2(-directionToTarget.y, directionToTarget.x);
-                        direction += -directionToTarget * 0.05f;    //
                         actor.setMoveDirection(MoveEvents.Move, directionToTarget.normalized);
                     }
                 }

@@ -25,7 +25,12 @@ public class UnarmedController : Controller
         //Get the distance from this game object to the target, path 0 if distance is < 5, path 1 otherwise
         actor.setMoveDirection(MoveEvents.StopMoving, Vector2.zero);
         float distance = (actor.gameObject.transform.position - target.gameObject.transform.position).magnitude;
-        if(distance < 5)
+        if (actor.getTouchingActorCount() > 0)
+        {
+            Vector2 direction = actor.getDirAwayFromTouchingActors();
+            actor.setMoveDirection(MoveEvents.Move, direction);
+        }
+        else if (distance < 5)
         {
             //Get if there is a weapon within 3 units
             GameObject closestWeapon = GetClosestWithin(weaponList, actor.gameObject, 3);
