@@ -158,6 +158,11 @@ public class Actor : MonoBehaviour
         return gunHeld;
     }
 
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+    }
+
     private IEnumerator MeleeAttack()
     {
         charging = true;
@@ -221,13 +226,6 @@ public class Actor : MonoBehaviour
                 if(gun.getOwner() != null) { return; }  //Don't pick upa  gun that is held
                 EquipWeapon(gun);
             }
-        }
-        if(go.GetComponent<Bullet>())
-        {
-            //Hit by a bullet
-            float damageTaken = collision.gameObject.GetComponent<Bullet>().calcDamage(this);
-            health -= damageTaken;
-            Destroy(go);
         }
     }
 

@@ -65,5 +65,12 @@ public class GrenadeProj : Bullet
         StartCoroutine(FuseFunction());
     }
 
-
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        Actor actor = collision.gameObject.GetComponent<Actor>();
+        if (actor != null)
+        {
+            actor.TakeDamage(calcDamage(actor));
+        }
+    }
 }
