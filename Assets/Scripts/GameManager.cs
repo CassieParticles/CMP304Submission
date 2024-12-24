@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     UnarmedController unarmedController;
     PistolController pistolController;
     MachineGunController machineGunController;
+    GrenadeController grenadeController;
 
     Actor playerActor;
 
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
                 break;
             case Weapon.GrenadeLauncher:
                 weaponToSpawn = GrenadeLauncherPrefab;
-                //TODO: AI is set to grenade launcher AI
+                AI = grenadeController;
                 break;
             case Weapon.RockerLauncher:
                 weaponToSpawn= RocketLauncherPrefab;
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour
         unarmedController = new UnarmedController();
         pistolController = new PistolController();
         machineGunController = new MachineGunController();
+        grenadeController = new GrenadeController();
 
 
         //Create player game object
@@ -109,17 +111,17 @@ public class GameManager : MonoBehaviour
         playerActor = playerController.getPlayer();
 
         //Give player a machine gun
-        SpawnWeapon(Vector2.zero, Weapon.MachineGun);
+        SpawnWeapon(Vector2.zero, Weapon.GrenadeLauncher);
 
 
-        SpawnEnemy(new Vector2(5, 0), Weapon.None);
-        SpawnEnemy(new Vector2(5, 0), Weapon.None);
-        SpawnEnemy(new Vector2(5, 0), Weapon.None);
+        //SpawnEnemy(new Vector2(5, 0), Weapon.None);
+        //SpawnEnemy(new Vector2(5, 0), Weapon.None);
+        //SpawnEnemy(new Vector2(5, 0), Weapon.None);
         SpawnEnemy(new Vector2(5, 0), Weapon.None);
 
-        SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
-        SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
-        SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
-        SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
+        //SpawnWeapon(new Vector2(1, 0), Weapon.Pistol);
+        //SpawnWeapon(new Vector2(1, 0), Weapon.Pistol);
+        //SpawnWeapon(new Vector2(1, 0), Weapon.Pistol);
+        SpawnWeapon(new Vector2(1, 0), Weapon.GrenadeLauncher);
     }
 }

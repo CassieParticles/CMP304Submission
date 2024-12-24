@@ -15,7 +15,7 @@ public enum ShootEvents
 {
     FireAt,
     DequipWeapon,
-    MeleeAttack
+    MeleeAttack,
 }
 
 public class Actor : MonoBehaviour
@@ -43,6 +43,8 @@ public class Actor : MonoBehaviour
 
     //Melee attack
     private bool charging;
+    //Direction actor was moving in last frame, used to predict movement direction
+    private Vector2 LFMoveDirection;
 
     public void setMoveDirection(System.Enum eventType, object moveDirection)
     {
@@ -76,6 +78,11 @@ public class Actor : MonoBehaviour
                 break;
         }
 
+    }
+
+    public Vector2 getMoveDirection()
+    {
+        return LFMoveDirection;
     }
 
     public void SetController(Controller controller)
@@ -179,6 +186,7 @@ public class Actor : MonoBehaviour
         //Ask controller to carry out functions
         if (controller == null) { return; }
         controller.DoActions(this);
+        LFMoveDirection = rb.velocity;
 
         if(health <= 0)
         {
