@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     PistolController pistolController;
     MachineGunController machineGunController;
     GrenadeController grenadeController;
+    RocketLauncherController rocketLauncherController;
 
     Actor playerActor;
 
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
                 break;
             case Weapon.RockerLauncher:
                 weaponToSpawn= RocketLauncherPrefab;
-                //TODO: AI is set to rocket launcher AI
+                AI = rocketLauncherController;
                 break;
 
         }
@@ -96,7 +97,7 @@ public class GameManager : MonoBehaviour
         pistolController = new PistolController();
         machineGunController = new MachineGunController();
         grenadeController = new GrenadeController();
-
+        rocketLauncherController = new RocketLauncherController();
 
         //Create player game object
         GameObject PlayerObject = Instantiate(ActorPrefab);
