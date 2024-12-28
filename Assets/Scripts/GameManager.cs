@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject GrenadeLauncherPrefab;
     [SerializeField] private GameObject RocketLauncherPrefab;
 
+    [SerializeField] private float[] InitialWeaponSpawnWeights = new float[5];
+
     PlayerController playerController;
     UnarmedController unarmedController;
     PistolController pistolController;
@@ -21,6 +23,8 @@ public class GameManager : MonoBehaviour
     RocketLauncherController rocketLauncherController;
 
     Actor playerActor;
+
+    Ratio WeaponSpawnRatio;
 
     public enum Weapon
     {
@@ -70,8 +74,8 @@ public class GameManager : MonoBehaviour
     {
         //Generate spawn position offset
         float spawnOffsetAngle = Random.value * 3.14159f * 2;
-        Vector2 offsetDir = new Vector2(Mathf.Cos(spawnOffsetAngle), Mathf.Sin(spawnOffsetAngle)) * 2;
-        Vector2 spawnPosition = groundSpawnPosition + offsetDir;
+        Vector2 offsetDir = new Vector2(Mathf.Cos(spawnOffsetAngle), Mathf.Sin(spawnOffsetAngle));
+        Vector2 spawnPosition = groundSpawnPosition + offsetDir * 2;
 
         //Give enemy their weapon
         SpawnWeapon(spawnPosition,weaponToGive);
@@ -84,9 +88,53 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void SpawnGroup(int enemyCount)
+    public void SpawnGroup(Vector2 position,int enemyCount)
     {
+        float[] spawnWeights = WeaponSpawnRatio.GetRatio();
 
+        for (int i = 0; i < enemyCount; i++)
+        {
+            float r = Random.value;
+            for(int j=0;j<spawnWeights.Length;++j)
+            {
+                if(r < spawnWeights[j])
+                {
+                    //Spawn relevant weapon, then break
+                    SpawnEnemy(position, (Weapon)j);
+                    break;
+                }
+                r-=spawnWeights[j]; //Reduce r by that value, then continue
+            }
+        }
+    }
+
+    private IEnumerator SpawnWaves()
+    {
+        int spawnAmount = 5;
+        int waveCount = 0;
+
+        while(true)
+        {
+            Vector2 playerPos = playerActor.transform.position;
+            float spawnOffsetAngle = Random.value * 3.14159f * 2;
+            Vector2 offsetDir = new Vector2(Mathf.Cos(spawnOffsetAngle), Mathf.Sin(spawnOffsetAngle));
+
+
+            //Spawn enemies
+            SpawnGroup(playerPos+ offsetDir * 10, spawnAmount);
+
+            //Increase difficulty
+            WeaponSpawnRatio.weights[2] += 0.2f;
+            WeaponSpawnRatio.weights[3] += 0.2f;
+            WeaponSpawnRatio.weights[4] += 0.1f;
+
+            if(waveCount % 3==0)
+            {
+                spawnAmount++;
+            }
+
+            yield return new WaitForSeconds(15);
+        }
     }
     
     private void Start()
@@ -111,14 +159,13 @@ public class GameManager : MonoBehaviour
         cameraGO.transform.parent = PlayerObject.transform;
         playerController.SetCamera(Camera.main);
 
+        WeaponSpawnRatio = new Ratio(InitialWeaponSpawnWeights);
+
         //Give player a machine gun
         SpawnWeapon(Vector2.zero, Weapon.MachineGun);
 
 
-        SpawnEnemy(new Vector2(7, 0), Weapon.RocketLauncher);
-        SpawnEnemy(new Vector2(7, 0), Weapon.RocketLauncher);
-        SpawnEnemy(new Vector2(7, 0), Weapon.RocketLauncher);
-        SpawnEnemy(new Vector2(7, 0), Weapon.RocketLauncher);
+        StartCoroutine(SpawnWaves());
     }
 
     private void FixedUpdate()

@@ -1,11 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Xml.Schema;
-using UnityEngine;
-using UnityEngine.UIElements;
-
 public class Ratio
 {
 
@@ -26,6 +18,8 @@ public class Ratio
 
     public float[] weights;
 
+    private float sum;
+
     public float this[int index]
     {
         get=>weights[index];
@@ -38,7 +32,7 @@ public class Ratio
         
     }
 
-    public float ratio(int index)
+    public float GetRatio(int index)
     {
         if(sum==0)
         {
@@ -46,8 +40,14 @@ public class Ratio
         }
         return weights[index]/sum;
     }
-    
 
-
-    float sum;
+    public float[] GetRatio()
+    {
+        float[] ratios = new float[weights.Length];
+        for(int i=0;i<ratios.Length;i++)
+        {
+            ratios[i] = GetRatio(i);
+        }
+        return ratios;
+    }
 }

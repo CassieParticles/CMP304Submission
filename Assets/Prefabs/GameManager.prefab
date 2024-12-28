@@ -49,3 +49,9 @@ MonoBehaviour:
   MachineGunPrefab: {fileID: 8841453270062057629, guid: a3cae1c3aeea2244f8031b134468551c, type: 3}
   GrenadeLauncherPrefab: {fileID: 6747607660481480530, guid: 2e545a7fccf2247499a2b93504b84b71, type: 3}
   RocketLauncherPrefab: {fileID: 4262786514222039346, guid: 7c71bfa203973b94d8c2f8316a483a8b, type: 3}
+  InitialWeaponSpawnWeights:
+  - 1
+  - 6
+  - 3
+  - 0
+  - 0
