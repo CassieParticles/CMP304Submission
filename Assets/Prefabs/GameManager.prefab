@@ -48,4 +48,4 @@ MonoBehaviour:
   PistolPrefab: {fileID: 4979342691687865261, guid: f20c6330fe989da478c15917d5209b74, type: 3}
   MachineGunPrefab: {fileID: 8841453270062057629, guid: a3cae1c3aeea2244f8031b134468551c, type: 3}
   GrenadeLauncherPrefab: {fileID: 6747607660481480530, guid: 2e545a7fccf2247499a2b93504b84b71, type: 3}
-  RocketLauncherPrefab: {fileID: 0}
+  RocketLauncherPrefab: {fileID: 4262786514222039346, guid: 7c71bfa203973b94d8c2f8316a483a8b, type: 3}

@@ -121,4 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c569e2250ff60e641bd00caa910736c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletShot: {fileID: 0}
+  bulletShot: {fileID: 7632260739394753036, guid: 88d732c97ad594148a5ddd5449e50f5b, type: 3}
+  rocketSpeed: 5
+  rocketCount: 1
