@@ -7,8 +7,6 @@ Fella - Me
 Rocket/Rocket launcher - Me
 
 Plan for today:
-Implement rocket and rocket launcher
-
 Do washing
 
 Plan rocket launcher AI

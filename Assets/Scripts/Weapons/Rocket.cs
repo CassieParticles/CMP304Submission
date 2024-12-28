@@ -17,15 +17,18 @@ public class Rocket : Bullet
 
     public override float calcDamage(Actor actor)
     {
-        float distance = (transform.position - actor.transform.position).magnitude;
+        float distance = Mathf.Max((transform.position - actor.transform.position).magnitude / explosionRadius,0);
 
-        return maxExplosionDamage * distance;
+        return maxExplosionDamage * (1 - distance);
     }
 
     private void Explode()
     {   
         //Set the rocket to having exploded
         exploded = true;
+
+        //Stop velocity
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
 
         //Disable rocket components
         rocketCollider.enabled = false;
@@ -62,14 +65,14 @@ public class Rocket : Bullet
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!exploded)
+        Actor actor = collision.gameObject.GetComponent<Actor>();
+        if(actor)
         {
-            Explode();
-        }
-        else 
-        {
-            Actor actor = collision.gameObject.GetComponent<Actor>();
-            if(actor)
+            if (!exploded)
+            {
+                Explode();
+            }
+            else
             {
                 actor.TakeDamage(calcDamage(actor));
             }

@@ -16,9 +16,9 @@ public class GrenadeProj : Bullet
 
     public override float calcDamage(Actor actor)
     {
-        float distance = (transform.position - actor.transform.position).magnitude;
+        float distance = Mathf.Max((transform.position - actor.transform.position).magnitude / explosionRadius, 0);
 
-        return maxExplosionDamage * distance;
+        return maxExplosionDamage * (1 - distance);
     }
 
     private IEnumerator FuseFunction()

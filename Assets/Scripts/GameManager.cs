@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
         playerActor = playerController.getPlayer();
 
         //Give player a machine gun
-        SpawnWeapon(Vector2.zero, Weapon.MachineGun);
+        SpawnWeapon(Vector2.zero, Weapon.RockerLauncher);
 
 
         SpawnEnemy(new Vector2(5, 0), Weapon.None);
