@@ -9,8 +9,6 @@ Rocket/Rocket launcher - Me
 Plan for today:
 Do washing
 
-Plan rocket launcher AI
-
 Implement rocket launcher AI
 
 Create function for player death switching scenes
