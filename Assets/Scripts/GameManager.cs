@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         Pistol,
         MachineGun,
         GrenadeLauncher,
-        RockerLauncher
+        RocketLauncher
     }
 
     public GameObject SpawnWeapon(Vector2 spawnPosition,  Weapon weaponSpawn)
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
                 weaponToSpawn = GrenadeLauncherPrefab;
                 AI = grenadeController;
                 break;
-            case Weapon.RockerLauncher:
+            case Weapon.RocketLauncher:
                 weaponToSpawn= RocketLauncherPrefab;
                 AI = rocketLauncherController;
                 break;
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
     {
         //Generate spawn position offset
         float spawnOffsetAngle = Random.value * 3.14159f * 2;
-        Vector2 offsetDir = new Vector2(Mathf.Cos(spawnOffsetAngle), Mathf.Sin(spawnOffsetAngle));
+        Vector2 offsetDir = new Vector2(Mathf.Cos(spawnOffsetAngle), Mathf.Sin(spawnOffsetAngle)) * 2;
         Vector2 spawnPosition = groundSpawnPosition + offsetDir;
 
         //Give enemy their weapon
@@ -112,17 +112,12 @@ public class GameManager : MonoBehaviour
         playerActor = playerController.getPlayer();
 
         //Give player a machine gun
-        SpawnWeapon(Vector2.zero, Weapon.RockerLauncher);
+        SpawnWeapon(Vector2.zero, Weapon.MachineGun);
 
 
-        SpawnEnemy(new Vector2(5, 0), Weapon.None);
-        SpawnEnemy(new Vector2(5, 0), Weapon.None);
-        SpawnEnemy(new Vector2(5, 0), Weapon.None);
-        SpawnEnemy(new Vector2(5, 0), Weapon.None);
-
-        SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
-        SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
-        SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
-        SpawnWeapon(new Vector2(1, 0), Weapon.MachineGun);
+        SpawnEnemy(new Vector2(7, 0), Weapon.RocketLauncher);
+        SpawnEnemy(new Vector2(7, 0), Weapon.RocketLauncher);
+        SpawnEnemy(new Vector2(7, 0), Weapon.RocketLauncher);
+        SpawnEnemy(new Vector2(7, 0), Weapon.RocketLauncher);
     }
 }

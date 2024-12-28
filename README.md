@@ -7,10 +7,6 @@ Fella - Me
 Rocket/Rocket launcher - Me
 
 Plan for today:
-Do washing
-
-Implement rocket launcher AI
-
 Create function for player death switching scenes
 
 Create function for spawning crows of enemies every so often (various weapons)
