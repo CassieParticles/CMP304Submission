@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -101,15 +102,14 @@ public class GameManager : MonoBehaviour
 
         //Create player game object
         GameObject PlayerObject = Instantiate(ActorPrefab);
+        playerActor = PlayerObject.GetComponent<Actor>();
         PlayerObject.name = "Player";
-        PlayerObject.GetComponent<Actor>().SetController(playerController);
+        playerActor.SetController(playerController);
 
         //Get camera
         GameObject cameraGO = Camera.main.gameObject;
         cameraGO.transform.parent = PlayerObject.transform;
         playerController.SetCamera(Camera.main);
-
-        playerActor = playerController.getPlayer();
 
         //Give player a machine gun
         SpawnWeapon(Vector2.zero, Weapon.MachineGun);
@@ -119,5 +119,14 @@ public class GameManager : MonoBehaviour
         SpawnEnemy(new Vector2(7, 0), Weapon.RocketLauncher);
         SpawnEnemy(new Vector2(7, 0), Weapon.RocketLauncher);
         SpawnEnemy(new Vector2(7, 0), Weapon.RocketLauncher);
+    }
+
+    private void FixedUpdate()
+    {
+        if(!playerActor)
+        {
+
+            SceneManager.LoadScene("Main Menu");
+        }
     }
 }

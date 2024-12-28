@@ -208,9 +208,6 @@ public class Actor : MonoBehaviour
 
         gunHeld = null;
 
-        Debug.Log("Created creature");
-        Debug.Log(rb);
-
         health = 100;
 
         targets = new Stack<Actor>();touchingActors = new List<Actor>();

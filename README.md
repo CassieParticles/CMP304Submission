@@ -7,7 +7,5 @@ Fella - Me
 Rocket/Rocket launcher - Me
 
 Plan for today:
-Create function for player death switching scenes
-
 Create function for spawning crows of enemies every so often (various weapons)
-	More powerful weapons spawn more frequently
+	More powerful weapons spawn more frequently as time goes on
