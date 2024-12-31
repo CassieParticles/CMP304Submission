@@ -54,7 +54,9 @@ public class MachineGunController :  Controller
                 }
                 else
                 {
-                    if(GetActorInWay(actor).Count > 0)
+
+
+                    if(GetActorInWay(actor, target.transform.position).Count > 0)
                     {
                         //Can't see target, move perpendicular
                         Vector2 directionToTarget = (target.transform.position - actor.transform.position).normalized;
@@ -75,19 +77,24 @@ public class MachineGunController :  Controller
         if (actor.getCurrentWeapon().getBulletCount() == 0)
         {
             //Drop weapon (change to unarmed AI)
-            actor.setAimDirection(ShootEvents.DequipWeapon, Vector2.zero);
+            actor.setAimDirection(ShootEvents.DequipWeapon, defaultController);
         }
         else
         {
+            //Calculate where the actor should aim
+            Vector2 aimPos = target.transform.position;
+            Vector2 targetMoveDirection = target.getMoveDirection();
+            float shotLead = 2.0f;
+            aimPos += targetMoveDirection * shotLead;
+
             //Check if shooting hits non-target
-            if (GetActorInWay(actor).Count > 0)
+            if (GetActorInWay(actor, aimPos).Count > 0)
             {
                 //Don't shoot
             }
             else
             {
-                Vector2 pos = target.transform.position;    //Explicitly(ish) cast position to a Vector2
-                actor.setAimDirection(ShootEvents.FireAt, pos);
+                actor.setAimDirection(ShootEvents.FireAt, aimPos);
             }
         }
     }

@@ -68,20 +68,25 @@ public class PistolController : Controller
             if(GetClosestWeapon(weaponList,actor.gameObject,0.1f,actor.getCurrentWeapon().getGunValue())!=null)    //Get if the actor is touching a better weapon
             {
                 //Drop weapon (change to unarmed AI, then to whatever AI the other weapon has)
-                Debug.Log("Dropping weapon");
-                actor.setAimDirection(ShootEvents.DequipWeapon, Vector2.zero);
+                
+                actor.setAimDirection(ShootEvents.DequipWeapon, defaultController);
             }
             else 
             {
+                Vector2 aimPos = target.transform.position;
+                Vector2 targetMoveDirection = target.getMoveDirection();
+                float shotLead = 0.6f;
+                aimPos += targetMoveDirection * shotLead;
+
+
                 //Check if shooting hits non-target
-                if (GetActorInWay(actor).Count > 0)
+                if (GetActorInWay(actor, aimPos).Count > 0)
                 {
                     //Don't shoot
                 }
                 else
                 {
-                    Vector2 pos = target.transform.position;    //Explicitly(ish) cast position to a Vector2
-                    actor.setAimDirection(ShootEvents.FireAt, pos);
+                    actor.setAimDirection(ShootEvents.FireAt, aimPos);
                 }
             }
         }

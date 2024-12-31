@@ -25,20 +25,11 @@ public class Actor : MonoBehaviour
 
     private Controller controller;
 
-    //Controller for when no weapon is selected
-    private Controller unarmedController;   
-
-    public void setUnarmedController(Controller controller)
-    {
-        unarmedController = controller;
-        SetController(unarmedController);
-    }
-
     private Rigidbody2D rb;
 
     private Gun gunHeld;
     private Gun ignoreGun;   //Once dropped, ignore till player steps off the gun
-    private Stack<Actor> targets;
+    private Actor target;
 
     private float health;
 
@@ -74,7 +65,7 @@ public class Actor : MonoBehaviour
                 }
                 break;
             case ShootEvents.DequipWeapon:
-                DequipCurrentWeapon();
+                DequipCurrentWeapon((Controller)aimDirection);
                 break;
             case ShootEvents.MeleeAttack:
                 StartCoroutine(MeleeAttack());
@@ -96,29 +87,12 @@ public class Actor : MonoBehaviour
 
     public Actor GetCurrentTarget()
     {
-        if (targets.Count == 0)
-        {
-            //No more targets, add player to stack
-            GameObject player = GameObject.Find("Player");
-            if (player == null)
-            {
-                //Player has been killed, errors are irelevent
-                return null;
-            }
-            AddNewTarget(player.GetComponent<Actor>());
-        }
-        Actor target = targets.Peek();
-        if(target==null)    //If current target doesn't exist, take it off the stack
-        {
-            targets.Pop();
-        }
-
-        return targets.Peek();
+        return target;
     }
 
     public void AddNewTarget(Actor actor)
     {
-        targets.Push(actor);
+        target = actor;
     }
 
     private void EquipWeapon(Gun gun)
@@ -139,7 +113,7 @@ public class Actor : MonoBehaviour
         }
     }
 
-    private void DequipCurrentWeapon()
+    private void DequipCurrentWeapon(Controller unarmedController)
     {
         if (gunHeld == null) { return; }
         gunHeld.gameObject.transform.parent = null;
@@ -210,7 +184,15 @@ public class Actor : MonoBehaviour
 
         health = 100;
 
-        targets = new Stack<Actor>();touchingActors = new List<Actor>();
+        GameObject player = GameObject.Find("Player");
+        if (player != null)
+        {
+            AddNewTarget(player.GetComponent<Actor>());
+
+        }
+
+
+        touchingActors = new List<Actor>();
     }
 
     private void FixedUpdate()
@@ -222,7 +204,7 @@ public class Actor : MonoBehaviour
 
         if(health <= 0)
         {
-            DequipCurrentWeapon();
+            DequipCurrentWeapon((Controller)null);
             Destroy(gameObject);    //If other systems need to know this, change
         }
     }

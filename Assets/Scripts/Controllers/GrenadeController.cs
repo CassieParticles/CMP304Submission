@@ -42,13 +42,17 @@ public class GrenadeController : Controller
         //Shooting decision tree
         if(actor.getCurrentWeapon().getBulletCount() == 0)
         {
-            actor.setAimDirection(ShootEvents.DequipWeapon, Vector2.zero);
+            actor.setAimDirection(ShootEvents.DequipWeapon, defaultController);
         }
         else
         {
-            Vector3 targetMoveDirection = target.getMoveDirection();
-            Vector2 targetPos = targetMoveDirection + target.transform.position;    //Throw infront of target
-            actor.setAimDirection(ShootEvents.FireAt, targetPos);
+            Vector2 pos = target.transform.position;    //Explicitly(ish) cast position to a Vector2
+
+            Vector2 targetMoveDir = target.getMoveDirection();  //Aim ahead of target
+            const float shotLead = 2.0f;
+            pos += targetMoveDir * shotLead;
+
+            actor.setAimDirection(ShootEvents.FireAt, pos);
         }
     }
 }

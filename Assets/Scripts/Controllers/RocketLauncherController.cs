@@ -33,7 +33,7 @@ public class RocketLauncherController : Controller
         }
         else 
         {
-            if(GetActorInWay(actor).Count > 0)
+            if(GetActorInWay(actor, target.transform.position).Count > 0)
             {
                 //Can't see target, move perpendicular
                 Vector2 directionToTarget = (target.transform.position - actor.transform.position).normalized;
@@ -50,12 +50,12 @@ public class RocketLauncherController : Controller
             if(!GetClosestWithin(actorList,target.gameObject,4))
             {
                 //No actors within 4 units of target
-                if(GetActorInWay(actor).Count == 0)
+                if(GetActorInWay(actor, target.transform.position).Count == 0)
                 {
                     //Can clearly see target, shoot
                     Vector2 aim = target.transform.position;
                     actor.setAimDirection(ShootEvents.FireAt,aim);
-                    actor.setAimDirection(ShootEvents.DequipWeapon, Vector2.zero);
+                    actor.setAimDirection(ShootEvents.DequipWeapon, defaultController);
                 }
                 //Else, do nothing (cannot clearly see target)
             }

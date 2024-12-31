@@ -84,8 +84,6 @@ public class GameManager : MonoBehaviour
         GameObject enemy = Instantiate(ActorPrefab);
         enemy.transform.position = spawnPosition;
         Actor enemyActor = enemy.GetComponent<Actor>();
-        enemyActor.setUnarmedController(unarmedController);
-
     }
 
     public void SpawnGroup(Vector2 position,int enemyCount)
@@ -124,14 +122,18 @@ public class GameManager : MonoBehaviour
             SpawnGroup(playerPos+ offsetDir * 10, spawnAmount);
 
             //Increase difficulty
-            WeaponSpawnRatio.weights[2] += 0.2f;
-            WeaponSpawnRatio.weights[3] += 0.2f;
-            WeaponSpawnRatio.weights[4] += 0.1f;
+            WeaponSpawnRatio[2] += 3f;
+            WeaponSpawnRatio[3] += 2f;
+            WeaponSpawnRatio[4] += 1f;
+
+            
 
             if(waveCount % 3==0)
             {
                 spawnAmount++;
             }
+
+            playerActor.TakeDamage(-30);
 
             yield return new WaitForSeconds(15);
         }
@@ -147,6 +149,11 @@ public class GameManager : MonoBehaviour
         machineGunController = new MachineGunController();
         grenadeController = new GrenadeController();
         rocketLauncherController = new RocketLauncherController();
+
+        pistolController.SetDefaultController(unarmedController);
+        machineGunController.SetDefaultController(unarmedController);
+        grenadeController.SetDefaultController(unarmedController);
+        rocketLauncherController.SetDefaultController(unarmedController);
 
         //Create player game object
         GameObject PlayerObject = Instantiate(ActorPrefab);

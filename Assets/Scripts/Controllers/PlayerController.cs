@@ -47,7 +47,7 @@ public class PlayerController : Controller
         }
         if (Input.GetMouseButton(1))
         {
-            actor.setAimDirection(ShootEvents.DequipWeapon, Vector2.up);
+            actor.setAimDirection(ShootEvents.DequipWeapon, defaultController);
         }
         if (Input.GetKey(KeyCode.E))
         {

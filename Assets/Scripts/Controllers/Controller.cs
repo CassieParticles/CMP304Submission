@@ -6,6 +6,15 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Controller
 {
+
+    protected Controller defaultController
+    {
+        get; set;
+    }
+    
+    public void SetDefaultController(Controller defaultController)
+        { this.defaultController = defaultController; }
+
     public virtual void DoActions(Actor actor)
     {
         //Null, should be overwritten
@@ -90,11 +99,11 @@ public class Controller
         return averageLocation;
     }
 
-    protected List<RaycastHit2D> GetActorInWay(Actor actor)
+    protected List<RaycastHit2D> GetActorInWay(Actor actor,Vector3 aimPosition)
     {
         Actor target = actor.GetCurrentTarget();
         //Shooting decision tree
-        Vector3 rayLine = target.transform.position - actor.transform.position;
+        Vector2 rayLine = aimPosition - actor.transform.position;
         List<RaycastHit2D> colliderArray = new List<RaycastHit2D>();
         ContactFilter2D contactFilter = new ContactFilter2D().NoFilter();
 
