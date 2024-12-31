@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static GameManager;
 using static UnityEngine.GraphicsBuffer;
 
 public class MachineGun : Gun   //Gun inherits from monobehavior
@@ -20,10 +21,16 @@ public class MachineGun : Gun   //Gun inherits from monobehavior
         newBullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
         newBullet.transform.position = transform.position + new Vector3(direction.x,direction.y,0);
         newBullet.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x));
+        newBullet.GetComponent<Bullet>().SetGun(this);
 
         canShoot = false;
 
         bulletCount--;
+
+        if (owner.gameObject.name != "Player")
+        {
+            AimTracker.RegisterFire(Weapon.MachineGun);
+        }
 
         yield return new WaitForSeconds(0.1f);
 

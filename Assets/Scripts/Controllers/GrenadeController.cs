@@ -12,6 +12,11 @@ public class GrenadeController : Controller
         GetScene(actorList, weaponList);
         Actor target = actor.GetCurrentTarget();
 
+        if (target == null)
+        {
+            return;
+        }
+
         //Remove the target and actor from the actor list
         actorList.Remove(target.gameObject);
         actorList.Remove(actor.gameObject);

@@ -87,6 +87,10 @@ public class Actor : MonoBehaviour
 
     public Actor GetCurrentTarget()
     {
+        if(target == null)
+        {
+            target = null;
+        }
         return target;
     }
 

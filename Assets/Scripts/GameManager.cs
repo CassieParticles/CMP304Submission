@@ -173,13 +173,15 @@ public class GameManager : MonoBehaviour
 
 
         StartCoroutine(SpawnWaves());
+
+        AimTracker.Init();
     }
 
     private void FixedUpdate()
     {
         if(!playerActor)
         {
-
+            AimTracker.PrintResults();
             SceneManager.LoadScene("Main Menu");
         }
     }

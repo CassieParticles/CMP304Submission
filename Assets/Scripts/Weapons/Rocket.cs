@@ -48,8 +48,10 @@ public class Rocket : Bullet
         Destroy(gameObject);
     }
 
-    private void Awake()
-    {   
+    public override void Awake()
+    {
+        base.Awake();
+
         //Get components
         rocketCollider = GetComponent<BoxCollider2D>();
         explosionCollider = GetComponent<CircleCollider2D>();

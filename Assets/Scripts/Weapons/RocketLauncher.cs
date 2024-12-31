@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 public class RocketLauncher : Gun
 {
@@ -17,10 +18,16 @@ public class RocketLauncher : Gun
         newBullet.GetComponent<Rigidbody2D>().velocity = direction * rocketSpeed;
         newBullet.transform.position = transform.position + new Vector3(direction.x, direction.y, 0);
         newBullet.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x));
+        newBullet.GetComponent<Bullet>().SetGun(this);
 
         canShoot = false;
 
         bulletCount--;
+
+        if (owner.gameObject.name != "Player")
+        {
+            AimTracker.RegisterFire(Weapon.RocketLauncher);
+        }
 
         yield return null;  //Only 1 rocket, so no need to add checks and timers
     }

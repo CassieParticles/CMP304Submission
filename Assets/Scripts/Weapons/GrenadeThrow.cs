@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static GameManager;
 
 public class GrenadeThrow : Gun
 {
@@ -18,9 +19,15 @@ public class GrenadeThrow : Gun
 
         gren.transform.position = transform.position;
         gren.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x));
+        gren.GetComponent<Bullet>().SetGun(this);
 
         canShoot = false;
         bulletCount--;
+
+        if (owner.gameObject.name != "Player")
+        {
+            AimTracker.RegisterFire(Weapon.GrenadeLauncher);
+        }
 
         yield return new WaitForSeconds(2.0f);
 
