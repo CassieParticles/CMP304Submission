@@ -126,12 +126,14 @@ public class GameManager : MonoBehaviour
             WeaponSpawnRatio[3] += 2f;
             WeaponSpawnRatio[4] += 1f;
 
-            
 
-            if(waveCount % 3==0)
+
+            if (waveCount % 3==0)
             {
                 spawnAmount++;
             }
+
+            waveCount++;
 
             playerActor.TakeDamage(-30);
 

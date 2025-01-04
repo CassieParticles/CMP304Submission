@@ -89,7 +89,7 @@ public class MachineGunController :  Controller
             //Calculate where the actor should aim
             Vector2 aimPos = target.transform.position;
             Vector2 targetMoveDirection = target.getMoveDirection();
-            float shotLead = 2.0f;
+            float shotLead = 0.5f;
             aimPos += targetMoveDirection * shotLead;
 
             //Check if shooting hits non-target

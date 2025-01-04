@@ -65,7 +65,7 @@ public class PistolController : Controller
         if (actor.getCurrentWeapon().getBulletCount() == 0)
         {
             //Drop weapon (change to unarmed AI)
-            actor.setAimDirection(ShootEvents.DequipWeapon, Vector2.zero);
+            actor.setAimDirection(ShootEvents.DequipWeapon, defaultController);
         }
         else
         {
@@ -80,7 +80,7 @@ public class PistolController : Controller
             {
                 Vector2 aimPos = target.transform.position;
                 Vector2 targetMoveDirection = target.getMoveDirection();
-                float shotLead = 0.6f;
+                float shotLead = 0.75f;
                 aimPos += targetMoveDirection * shotLead;
 
 

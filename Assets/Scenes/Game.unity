@@ -231,6 +231,18 @@ PrefabInstance:
       propertyPath: pistolControllerPrefab
       value: 
       objectReference: {fileID: 4813986944421143128, guid: b8c66d22ead863e4fa165d665ae21bca, type: 3}
+    - target: {fileID: 3047006647956255217, guid: be7f66dbcb20e2e47a9b91d61ac78f8e, type: 3}
+      propertyPath: InitialWeaponSpawnWeights.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047006647956255217, guid: be7f66dbcb20e2e47a9b91d61ac78f8e, type: 3}
+      propertyPath: InitialWeaponSpawnWeights.Array.data[1]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047006647956255217, guid: be7f66dbcb20e2e47a9b91d61ac78f8e, type: 3}
+      propertyPath: InitialWeaponSpawnWeights.Array.data[2]
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3771041242831726373, guid: be7f66dbcb20e2e47a9b91d61ac78f8e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

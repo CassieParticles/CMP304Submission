@@ -17,7 +17,7 @@ public class Controller
 
     public virtual void DoActions(Actor actor)
     {
-        //Null, should be overwritten
+        //Empty function, inherited Controllers override this
     }
 
     protected void GetScene(List<GameObject> actors, List<GameObject> guns)

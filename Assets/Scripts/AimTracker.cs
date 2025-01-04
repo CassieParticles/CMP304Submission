@@ -118,7 +118,7 @@ public static class AimTracker
             string outputMessage = "Weapon: " + (weapon).ToString() + '\n';
             outputMessage += "Shots fired: " + ShotsFired[i] + '\n';
             outputMessage += "Shots hit: " + ShotsHit[i] + '\n';
-            outputMessage += "Shots missed: " + ShotsMissed[i] + '\n';
+            outputMessage += "Shots missed: " + (ShotsFired[i] - (ShotsHit[i] + ShotsHitTeam[i])) + '\n';
             outputMessage += "Friendly fire shots: " + ShotsHitTeam[i] + '\n';
 
             Debug.Log(outputMessage);

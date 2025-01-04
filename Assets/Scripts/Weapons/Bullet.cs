@@ -6,13 +6,13 @@ public class Bullet : MonoBehaviour
 {
     public virtual float calcDamage(Actor actor) { return 0; }
 
-    private Gun gun;
+    private string shotBy;
 
     private IEnumerator CleanupBullet()
     {
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(3);
 
-        if(gun.getOwner().gameObject.name!="Player")
+        if (shotBy != "Player")
         {
             AimTracker.RegisterMiss(AimTracker.GetEnumFromBullet(this));
         }
@@ -26,14 +26,14 @@ public class Bullet : MonoBehaviour
     }
 
     public void SetGun(Gun gun)
-    { this.gun = gun; }
+    { this.shotBy = gun.getOwner().gameObject.name; }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         Actor actor = collision.gameObject.GetComponent<Actor>();
         if (actor != null)
         {
-            if(gun.getOwner().gameObject.name!="Player")
+            if(shotBy !="Player")
             {
                 if (actor.gameObject.name == "Player")
                 {

@@ -5,7 +5,3 @@ Cartoon bang - https://stock.adobe.com/uk/images/bang-comic-book-cartoon-explosi
 Grenade projectile/weapon - Emily 
 Fella - Me
 Rocket/Rocket launcher - Me
-
-Plan for today:
-Create function for spawning crows of enemies every so often (various weapons)
-	More powerful weapons spawn more frequently as time goes on
